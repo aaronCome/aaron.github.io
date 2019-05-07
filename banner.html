@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Examples</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+<meta name="viewport"
+  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    html{
+font-size:20px;
+    }
+    html,body{
+        width: 100%;
+        height: 100%;
+        overflow: hidden;;
+    }
+    #box{
+        width: 16rem;height:7.5rem;overflow: hidden;line-height: 7.5rem;font-size: 50px;text-align: center;color:#fff;
+    }
+    ul{
+        width: 64rem;height:7.5rem;overflow:hidden;
+    }
+    ul li{
+        width: 16rem;height:7.5rem;float:left;
+    }
+</style>
+<script>
+    (function(win,doc){
+        function change(){
+            doc.documentElement.style.fontSize=doc.documentElement.clientWidth*20/320+'px';
+        }
+        change();
+        win.onresize=change;
+    })(window,document);
+</script>
+<script>
+    function drag(oDiv,aLi){
+        var x=0;
+        var iNow=0;
+        oDiv.addEventListener('touchstart', function(ev){
+            var id= ev.targetTouches[0].identifier;
+            var disX= ev.targetTouches[0].pageX - x
+            var downX=ev.targetTouches[0].pageX;
+            function fnMove(ev){
+                if(ev.targetTouches[0].identifier==id){
+                    x=ev.targetTouches[0].pageX - disX;
+                    oDiv.style.transform='translateX('+x+'px)';
+                }
+            }
+            function fnEnd(ev){
+                if(ev.changedTouches[0].identifier==id){
+                    document.removeEventListener('touchmove',fnMove, false);
+                    document.removeEventListener('touchend', fnEnd, false);
+                    oDiv.style.transition='1s all linear';
+                    var upX=ev.changedTouches[0].pageX;
+                    if(Math.abs(upX-downX)>50){
+                        if(upX-downX<0){
+                            iNow++;
+                            if(iNow==4){
+                                iNow=3;
+                            }
+                        }else{
+                            iNow--;
+                            if(iNow==-1){
+                                iNow=0;
+                            }
+                        }
+                    }
+                    oDiv.style.transform='translateX('+-iNow*aLi.offsetWidth+'px)';
+                    oDiv.addEventListener('transitionend',function(){
+                        oDiv.style.transition='none';
+                        x=-iNow*aLi.offsetWidth;
+                    },false);
+            
+                }
+            }
+            document.addEventListener('touchmove',fnMove, false);
+            document.addEventListener('touchend', fnEnd, false);
+            ev.preventDefault();        //事件绑定用的阻止默认事件;
+        }, false)
+    };
+    document.addEventListener('DOMContentLoaded',function(){
+        var oUl=document.querySelector('#box ul');
+        var aLi=oUl.children;
+        drag(oUl,aLi[0]);
+    },false);
+</script>
+</head>
+<body>
+    <div id="box">
+        <ul >
+            <li style="background:red;">1</li>
+            <li style="background:yellow;">2</li>
+            <li style="background:blue;">3</li>
+            <li style="background:green;">4</li>
+        </ul>
+    </div>
+</body>
+</html>
