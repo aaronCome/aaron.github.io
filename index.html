@@ -1,77 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <style>
-        /* 模态框遮罩 */
-        #modal-overlay {
-            visibility: hidden;
-            border:1px solid red;
-            /* display:none; */
-            position:absolute;
-            left:0;
-            top:0;
-            width:100%;
-            height:100%;
-            text-align:center;
-            z-index:999;
-            background-color:#333;
-            opacity: .5;
-        }
-        /* m模态框样式 */
-        .modal-data{
-
-            width:300px;
-            margin:100px auto;
-            background-color: #fff;
-            border: 1px solid #000;
-            padding:15px;
-            text-align:center;
-            z-index: 1;
-        }
-    </style>
-</head>
-<body>
-    <div id="dom">
-
-
-
-
-
-</div>
-    <div id="modal-overlay"> 
-        <div class="modal-data">		
-            <p>一个模态对话框 </p>
-            <p>点击<a onclick="overlay()" href="#">这里</a>关闭</p>
+        <meta charset="UTF-8">
+        <!-- import CSS -->
+        <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+      </head>
+      <body>
+        <div id="app">
+            <el-form class="form">
+                <el-input placeholder="账号"></el-input> <br>
+                <el-input placeholder="密码"></el-input><br>
+                <el-button >登录</el-button>
+            </el-form>
         </div>
-    </div>
-    <p>点击<a onclick="overlay()" href="#">这里</a>关闭</p>
-    <script>
-        function overlay(){
-            console.log('df')
-            var e1 = document.getElementById('modal-overlay')
-            console.log(e1.style.visibility)
-            e1.style.visibility =(e1.style.visibility =='visible') ?'hidden':'visible'
-        }
+      </body>
+        <!-- import Vue before Element -->
+        <script src="https://unpkg.com/vue/dist/vue.js"></script>
+        <!-- import JavaScript -->
+        <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+        <script>
+          
+          new Vue({
+            el: '#app',
+            data: function() {
+              return {
+                visible: false 
+              }
+            },
+            methods:{
 
+            },
+            mounted() {
 
-
-
-
-
-
-
-// 
-
-
-
-
-
-
-
-    </script>
-</body>
-</html>
+            }
+          })
+        </script>
+        <style>
+            .form{
+                position:absolute;
+                left:50%;
+                top:50%;
+                transform:translate(-50%,-50%);
+                padding:40px;
+                border:1px solid white;
+                box-shadow:0 0 5px 2px #ded9d9;
+            }
+            .el-input{
+                width:300px;
+                margin: 10px 10px;
+            }
+            .el-button{
+                /* width:100px;
+                margin: 20px 100px; */
+            }
+        </style>
+      </html>
